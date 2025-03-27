@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Łoniaki Waluta</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar">💰 Waluta Łoniaki 💰</div>
+
+    <div class="container">
+        <h1>Oficjalnie nieoficjalna strona internetowa waluty Łoniaki!</h1>
+        <p class="exchange-rate">Obecna wartość:<br>1 Łoniak = <span id="rate">1.23</span> PLN</p>
+        <br>
+        <p>Wykres wartości Łoniaków w ostatnich dniach:</p>
+
+        <div id="chartBox">
+            <canvas id="loniakChart"></canvas>
+        </div>
+        <br>
+        <br>
+
+        <p>Kalkulator Łoniaki ⇄ PLN</p>
+        <div class="converter">
+            <input type="number" id="plnInput" placeholder="PLN" oninput="convertToLoniak()">
+            <span>⇄</span>
+            <input type="number" id="loniakInput" placeholder="Łoniaki" oninput="convertToPLN()">
+        </div>
+    </div>
+</body>
+<script src="app.js"></script>
+<link rel="stylesheet" href="style.css">
+</html>
