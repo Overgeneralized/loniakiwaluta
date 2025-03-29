@@ -3,6 +3,18 @@
     {
       "candlestickHeight": 2,
       "notesInCirculation": 2
+    },
+    {
+      "candlestickHeight": 2,
+      "notesInCirculation": 2
+    },
+    {
+      "candlestickHeight": 2,
+      "notesInCirculation": 2
+    },
+    {
+      "candlestickHeight": "3",
+      "notesInCirculation": "5"
     }
   ]
 }
