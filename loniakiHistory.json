@@ -13,8 +13,8 @@
       "notesInCirculation": 2
     },
     {
-      "candlestickHeight": "3",
-      "notesInCirculation": "5"
+      "candlestickHeight": 3.0,
+      "notesInCirculation": 5
     }
   ]
 }
