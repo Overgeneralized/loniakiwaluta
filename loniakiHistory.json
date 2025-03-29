@@ -1,9 +1,9 @@
 {
-    "history": [
-        {
-            "candlestickHeight": 2,
-            "notesInCirculation": 2
-        }
-    ]
+  "history": [
+    {
+      "candlestickHeight": 2,
+      "notesInCirculation": 2
+    }
+  ],
+  "hello": "somehting"
 }
-  
