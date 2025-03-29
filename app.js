@@ -1,24 +1,67 @@
-const ctx = document.getElementById('loniakChart').getContext('2d');
-const loniakData = {
-    labels: ['Marzec 21', 'Marzec 22', 'Marzec 23', 'Marzec 24', 'Marzec 25'], // Dates
-    datasets: [{
-        label: 'Łoniaki na PLN',
-        data: [1, 1.1, 1.3, 1.2, 1.5], // Example exchange rate values
-        borderColor: '#FF5733',
-        borderWidth: 5
-    }]
-};
+const polishMonths = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
 
-new Chart(ctx, {
-    type: 'line',
-    data: loniakData,
-    options: {
-        responsive: true,
-        scales: {
-            y: { beginAtZero: false }
-        }
+async function fetchLoniakHistory() {
+    let response = await fetch('loniakiHistory.json');
+    let jsonData = await response.json();
+    console.log(jsonData);
+    return jsonData.history;
+}
+
+function calculateLoniakValue(daysSince, candlestickHeight, notesInCirculation) {
+    let y = candlestickHeight < 0 ? notesInCirculation * 0.1 : 0.05
+    return 1 + (daysSince * 0.05 - candlestickHeight + y) / 2
+}
+
+async function initializeApp() {
+    var loniakHistory = await fetchLoniakHistory();
+    let stockChartData = []
+    let valueChartData = []
+    let lastCandlestickHeight = 0;
+    let currentDate = new Date(2025, 3, 26);
+    for (let i = 0; i < loniakHistory.length; i++) {
+        let currentData = loniakHistory[i];
+        let currentWrittenDate = currentDate.getDate() + " " + polishMonths[currentDate.getMonth()]
+        let currentLoniakValue = calculateLoniakValue(i, currentData.candlestickHeight, currentData.notesInCirculation);
+        valueChartData.push({
+            x: currentWrittenDate,
+            y: currentLoniakValue
+        })
+        stockChartData.push({
+            x: currentWrittenDate,
+            y: [lastCandlestickHeight, 0, 0, currentData.candlestickHeight]
+        })
+        currentDate.setDate(currentDate.getDate() + 1);
     }
-});
+
+    var valueChartOptions = {
+        chart: {
+            type: 'line'
+        },
+        series: [{
+            data: valueChartData
+          }], 
+          xaxis: {
+            type: 'datetime'
+          }  
+    }
+
+    let valueChart = new ApexCharts(document.getElementById("valueChart"), valueChartOptions);
+    valueChart.render()
+
+    var stockChartOptions = {
+        chart: {
+            type: 'candlestick'
+        },
+        series: [{
+            data: stockChartData
+        }]
+    }
+
+    let stockChart = new ApexCharts(document.getElementById("stockChart"), stockChartOptions);
+    stockChart.render()
+}
+
+initializeApp();
 
 let exchangeRate = 1.23;
 

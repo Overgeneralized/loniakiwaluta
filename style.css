@@ -41,7 +41,7 @@ body {
     color: #FFD700;
 }
 
-#chartBox {
+#stockChart, #valueChart {
     width: 100%;
 }
 
